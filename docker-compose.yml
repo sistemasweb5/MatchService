@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: web-match-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=MatchServiceDsWeb;Username=groupmatch;Password=servicegroupmatch
+    volumes:
+      - ~/.vscode-server:/root/.vscode-server
+
+  db:
+    container_name: web-match-service-db
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=groupmatch
+      - POSTGRES_PASSWORD=servicegroupmatch
+      - POSTGRES_DB=MatchServiceDsWeb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  db-data:
