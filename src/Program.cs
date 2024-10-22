@@ -1,12 +1,14 @@
 using MatchService.Infrastructure;
 using MatchService.RequestPipeline;
-using Microsoft.EntityFrameworkCore;
-using MatchService.Data.Concretes;
+using Npgsql; // Para NpgsqlConnection
+using System.Data; 
 using MatchService.Domain;
-
+using MatchService.Data.Concretes;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddSingleton<IDbConnection>((sp) =>
+    new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddTransient<DbInitializer>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfraestructure(builder.Configuration);
