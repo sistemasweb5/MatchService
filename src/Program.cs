@@ -1,13 +1,11 @@
 using MatchService.Infrastructure;
 using MatchService.RequestPipeline;
-using Npgsql; // Para NpgsqlConnection
+using Npgsql; 
 using System.Data; 
 using MatchService.Domain;
 using MatchService.Data.Concretes;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IDbConnection>((sp) =>
-    new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddTransient<DbInitializer>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
