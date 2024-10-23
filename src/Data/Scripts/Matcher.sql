@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS match (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    "user" VARCHAR(255) NOT NULL,
-    worker VARCHAR(255) NOT NULL,
+    id UUID NOT NULL,
+    "user" UUID NOT NULL,
+    worker UUID NOT NULL,
     job_type VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

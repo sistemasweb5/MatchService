@@ -1,0 +1,12 @@
+{
+    "categories": [
+        {
+            "id": "category-uuid-1",
+            "rol": "client"
+        },
+        {
+            "id": "category-uuid-2",
+            "rol": "worker"
+        }
+    ]
+}

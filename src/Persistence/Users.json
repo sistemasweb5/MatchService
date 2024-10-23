@@ -1,0 +1,16 @@
+{
+    "user": [
+        {
+            "id": "client-uuid-1",
+            "name": "Juan Pérez",
+            "email_address": "juan.perez@example.com",
+            "category_id": "category-uuid-1"
+        },
+        {
+            "id": "client-uuid-2",
+            "name": "Carlos Gómez",
+            "email_address": "carlos.gomez@example.com",
+            "category_id": "category-uuid-1"
+        }
+    ]
+}
