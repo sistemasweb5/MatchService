@@ -6,7 +6,6 @@ using MatchService.Domain;
 using MatchService.Data.Concretes;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddTransient<DbInitializer>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfraestructure(builder.Configuration);

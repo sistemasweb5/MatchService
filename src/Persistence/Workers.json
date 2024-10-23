@@ -1,0 +1,10 @@
+{
+    "worker": [
+        {
+            "id": "worker-uuid-1",
+            "name": "Ana Martínez",
+            "email_address": "ana.martinez@example.com",
+            "category_id": "category-uuid-2"
+        }
+    ]
+}
