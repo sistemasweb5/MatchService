@@ -1,9 +1,6 @@
 using MatchService.Infrastructure;
 using MatchService.RequestPipeline;
-using Npgsql; 
-using System.Data; 
-using MatchService.Domain;
-using MatchService.Data.Concretes;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
