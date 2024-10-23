@@ -1,7 +1,0 @@
-CREATE TABLE IF NOT EXISTS match (
-    id UUID NOT NULL,
-    "user" UUID NOT NULL,
-    worker UUID NOT NULL,
-    job_type VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
