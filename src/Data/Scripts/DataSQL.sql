@@ -46,3 +46,4 @@ INSERT INTO client (id, localization_id ,name, emailAddress, categoryId) VALUES
 INSERT INTO jobs (id, user_client_id, user_worker_id, localization_id, created_at, job_type, status, description, price) VALUES
     (gen_random_uuid(), (SELECT id FROM client WHERE name = 'John Doe'), (SELECT id FROM client WHERE name = 'Mike Brown'), (SELECT id FROM localization WHERE name = 'Location 1'), NOW(), 'electrician', 'assigned', 'Job description for Job 1', 100.00),
     (gen_random_uuid(), (SELECT id FROM client WHERE name = 'Jane Smith'), (SELECT id FROM client WHERE name = 'Mike Brown'), (SELECT id FROM localization WHERE name = 'Location 2'), NOW(), 'plumber', 'working', 'Job description for Job 2', 200.00);
+    
