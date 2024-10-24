@@ -18,7 +18,7 @@ services:
 
   db:
     container_name: web-match-service-db
-    image: postgres:latest
+    image: postgis/postgis:latest
     environment:
       - POSTGRES_USER=groupmatch
       - POSTGRES_PASSWORD=servicegroupmatch
