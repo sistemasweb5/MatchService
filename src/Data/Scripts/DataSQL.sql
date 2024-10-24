@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS category (
 
 CREATE TABLE IF NOT EXISTS localization (
     id UUID PRIMARY KEY,
-    name varchar(100)
+    name varchar(100),
+    geom GEOMETRY(Point, 4326)
 );
 
 CREATE TABLE IF NOT EXISTS client (
@@ -33,17 +34,18 @@ INSERT INTO category (id, rol) VALUES
     (gen_random_uuid(), 'user'),
     (gen_random_uuid(), 'worker');
 
-INSERT INTO localization (id, name) VALUES
-    (gen_random_uuid(), 'Location 1'),
-    (gen_random_uuid(), 'Location 2'),
-    (gen_random_uuid(), 'Location 3');
+INSERT INTO localization (id, name, geom)
+VALUES 
+  (gen_random_uuid(), 'Location A', ST_GeomFromText('POINT(-17.389500 -66.156800)', 4326)),
+  (gen_random_uuid(), 'Location B', ST_GeomFromText('POINT(-16.500000 -66.150000)', 4326)),
+  (gen_random_uuid(), 'Location C', ST_GeomFromText('POINT(-17.983333 -66.150000)', 4326));
 
 INSERT INTO client (id, localization_id ,name, emailAddress, categoryId) VALUES
-    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location 1') ,'John Doe', 'john@example.com', (SELECT id FROM category WHERE rol = 'user')),
-    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location 2') ,'Jane Smith', 'jane@example.com', (SELECT id FROM category WHERE rol = 'user')),
-    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location 3') ,'Mike Brown', 'mike@example.com', (SELECT id FROM category WHERE rol = 'worker'));
+    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location A') ,'John Doe', 'john@example.com', (SELECT id FROM category WHERE rol = 'user')),
+    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location B') ,'Jane Smith', 'jane@example.com', (SELECT id FROM category WHERE rol = 'user')),
+    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location C') ,'Mike Brown', 'mike@example.com', (SELECT id FROM category WHERE rol = 'worker'));
 
 INSERT INTO jobs (id, user_client_id, user_worker_id, localization_id, created_at, job_type, status, description, price) VALUES
-    (gen_random_uuid(), (SELECT id FROM client WHERE name = 'John Doe'), (SELECT id FROM client WHERE name = 'Mike Brown'), (SELECT id FROM localization WHERE name = 'Location 1'), NOW(), 'electrician', 'assigned', 'Job description for Job 1', 100.00),
-    (gen_random_uuid(), (SELECT id FROM client WHERE name = 'Jane Smith'), (SELECT id FROM client WHERE name = 'Mike Brown'), (SELECT id FROM localization WHERE name = 'Location 2'), NOW(), 'plumber', 'working', 'Job description for Job 2', 200.00);
-    
+    (gen_random_uuid(), (SELECT id FROM client WHERE name = 'John Doe'), (SELECT id FROM client WHERE name = 'Mike Brown'), (SELECT id FROM localization WHERE name = 'Location A'), NOW(), 'electrician', 'assigned', 'Job description for Job 1', 100.00),
+    (gen_random_uuid(), (SELECT id FROM client WHERE name = 'Jane Smith'), (SELECT id FROM client WHERE name = 'Mike Brown'), (SELECT id FROM localization WHERE name = 'Location B'), NOW(), 'plumber', 'working', 'Job description for Job 2', 200.00);
+
