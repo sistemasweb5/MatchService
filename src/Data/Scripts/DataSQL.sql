@@ -9,12 +9,25 @@ CREATE TABLE IF NOT EXISTS localization (
     geom GEOMETRY(Point, 4326)
 );
 
+CREATE TABLE IF NOT EXISTS specialty (
+    id UUID PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    user_client_id UUID NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS workSchedule (
+    id UUID PRIMARY KEY,
+    startTime VARCHAR NOT NULL,
+    endTime VARCHAR NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS client (
     id UUID PRIMARY KEY,
     localization_id UUID NOT NULL,
     name VARCHAR NOT NULL,
     emailAddress VARCHAR NOT NULL,
-    categoryId UUID NOT NULL
+    categoryId UUID NOT NULL,
+    workScheduleId UUID NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS jobs (
@@ -34,18 +47,23 @@ INSERT INTO category (id, rol) VALUES
     (gen_random_uuid(), 'user'),
     (gen_random_uuid(), 'worker');
 
-INSERT INTO localization (id, name, geom)
-VALUES 
+INSERT INTO localization (id, name, geom) VALUES 
   (gen_random_uuid(), 'Location A', ST_GeomFromText('POINT(-17.389500 -66.156800)', 4326)),
   (gen_random_uuid(), 'Location B', ST_GeomFromText('POINT(-16.500000 -66.150000)', 4326)),
   (gen_random_uuid(), 'Location C', ST_GeomFromText('POINT(-17.983333 -66.150000)', 4326));
 
-INSERT INTO client (id, localization_id ,name, emailAddress, categoryId) VALUES
-    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location A') ,'John Doe', 'john@example.com', (SELECT id FROM category WHERE rol = 'user')),
-    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location B') ,'Jane Smith', 'jane@example.com', (SELECT id FROM category WHERE rol = 'user')),
-    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location C') ,'Mike Brown', 'mike@example.com', (SELECT id FROM category WHERE rol = 'worker'));
+INSERT INTO workSchedule (id, startTime, endTime) VALUES 
+  ('550e8400-e29b-41d4-a716-446655440006', '08:00', '17:00'), 
+  ('550e8400-e29b-41d4-a716-446655440007', '09:00', '18:00'), 
+  ('550e8400-e29b-41d4-a716-446655440008', '22:00', '06:00'), 
+  ('550e8400-e29b-41d4-a716-446655440009', '12:00', '20:00'), 
+  ('550e8400-e29b-41d4-a716-446655440010', '07:00', '15:00');
+
+INSERT INTO client (id, localization_id ,name, emailAddress, categoryId, workScheduleId) VALUES
+    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location A') ,'John Doe', 'john@example.com', (SELECT id FROM category WHERE rol = 'user'), '550e8400-e29b-41d4-a716-446655440006'),
+    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location B') ,'Jane Smith', 'jane@example.com', (SELECT id FROM category WHERE rol = 'user'), '550e8400-e29b-41d4-a716-446655440006'),
+    (gen_random_uuid(), (SELECT id FROM localization WHERE name = 'Location C') ,'Mike Brown', 'mike@example.com', (SELECT id FROM category WHERE rol = 'worker'), '550e8400-e29b-41d4-a716-446655440006');
 
 INSERT INTO jobs (id, user_client_id, user_worker_id, localization_id, created_at, job_type, status, description, price) VALUES
     (gen_random_uuid(), (SELECT id FROM client WHERE name = 'John Doe'), (SELECT id FROM client WHERE name = 'Mike Brown'), (SELECT id FROM localization WHERE name = 'Location A'), NOW(), 'electrician', 'assigned', 'Job description for Job 1', 100.00),
     (gen_random_uuid(), (SELECT id FROM client WHERE name = 'Jane Smith'), (SELECT id FROM client WHERE name = 'Mike Brown'), (SELECT id FROM localization WHERE name = 'Location B'), NOW(), 'plumber', 'working', 'Job description for Job 2', 200.00);
-
