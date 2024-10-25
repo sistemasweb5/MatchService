@@ -49,7 +49,7 @@ INSERT INTO category (id, rol) VALUES
 
 INSERT INTO localization (id, name, geom) VALUES 
   (gen_random_uuid(), 'Location A', ST_GeomFromText('POINT(-17.389500 -66.156800)', 4326)),
-  (gen_random_uuid(), 'Location B', ST_GeomFromText('POINT(-16.500000 -66.150000)', 4326)),
+  (gen_random_uuid(), 'Location B', ST_GeomFromText('POINT(-17.500000 -66.150000)', 4326)),
   (gen_random_uuid(), 'Location C', ST_GeomFromText('POINT(-17.983333 -66.150000)', 4326));
 
 INSERT INTO workSchedule (id, startTime, endTime) VALUES 
