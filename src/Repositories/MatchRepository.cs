@@ -5,11 +5,11 @@ using MatchService.Repositories.Interfaces;
 
 namespace MatchService.Repositories;
 
-public class MatchService : IMatchRepository
+public class MatchRepository : IMatchRepository
 {
     private readonly IDbConnectionFactory _dbConnection;
 
-    public MatchService(IDbConnectionFactory dbConnection)
+    public MatchRepository(IDbConnectionFactory dbConnection)
     {
         _dbConnection = dbConnection;
     }
