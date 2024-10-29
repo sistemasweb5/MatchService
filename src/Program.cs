@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddInfraestructure(builder.Configuration);
+builder.Services.AddInfraestructure(builder.Configuration).AddControllers();
 
 var app = builder.Build();
 app.InitializeDatabase();
@@ -14,10 +14,13 @@ app.InitializeDatabase();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => {
+    app.UseSwaggerUI(c =>
+    {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Match Service - API V1 ");
         c.RoutePrefix = string.Empty;
     });
 }
-app.UseHttpsRedirection();
+app.MapControllers();
+
+// app.UseHttpsRedirection();
 app.Run();
