@@ -3,6 +3,8 @@ using MatchService.Data.Concretes;
 using MatchService.Data.Interfaces;
 using MatchService.Repositories;
 using MatchService.Repositories.Interfaces;
+using MatchService.Services;
+using MatchService.Services.Interfaces;
 
 namespace MatchService.Infrastructure;
 
@@ -12,7 +14,8 @@ public static class DependencyInjection
     {
         services
             .AddDataBase(configuration)
-            .AddRepositories();
+            .AddRepositories()
+            .AddServices();
 
         return services;
     }
@@ -27,6 +30,12 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IMatchRepository, MatchRepository>();
+        return services;
+    }
+
+    private static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<IMatchServices, MatchServices>();
         return services;
     }
 }
